@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args){ //pierwszy mini projekt
 
         Client client1 = new Client("c1", true);
         Client client2 = new Client("c2", true);

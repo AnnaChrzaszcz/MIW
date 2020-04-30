@@ -10,6 +10,7 @@ public class Client implements Serializable{
     String clientNumber;
     Boolean isVip;
     double wysokoscRabatu;
+    List<BirthdayParty> birthdayParties;
 
     private static List<Client> clientExtent = new ArrayList<>(); // 1. Ekstensja
 
@@ -18,6 +19,7 @@ public class Client implements Serializable{
         this.clientNumber = clientNumber;
         this.isVip = isVip;
         wysokoscRabatu = (this.numberOfBirthdays() >= 3) ? 0.2 : (this.numberOfBirthdays() == 2) ? 0.1 : 0.0;
+        this.birthdayParties = new ArrayList<>();
         addClient(this); //dodanie do ekstensji
     }
 
@@ -34,11 +36,15 @@ public class Client implements Serializable{
         System.out.println("I remove client: " + client.clientNumber);
     }
 
-    public static Integer clientExtentSize(){ //metoda klasowa
+    public static Integer clientExtentSize(){
         return clientExtent.size();
     }
 
-    public static void showExtent() {   //8. metoda klasowa
+    public static Integer howManyVips(){ //metoda klasowa
+        return clientExtent.stream().filter(cl -> cl.isVip).toArray().length;
+    }
+
+    public static void showExtent() {
 
         System.out.println("Extent of the class: " + Client.class.getName());
 
@@ -59,4 +65,10 @@ public class Client implements Serializable{
         return "clients number: " + this.clientNumber + (this.isVip ? " (client VIP)" : " ");
     }
 
+    public void addBirthdayParty(BirthdayParty birthdayParty) {
+        if(!birthdayParties.contains(birthdayParty)){
+            this.birthdayParties.add(birthdayParty);
+            birthdayParty.addClientQualif(this);
+        }
+    }
 }

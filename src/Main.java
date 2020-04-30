@@ -1,6 +1,7 @@
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -70,7 +71,7 @@ public class Main {
 
 
         //8. metoda klasowa - już poprawione
-        System.out.println( Client.clientExtentSize());
+        System.out.println( Client.howManyVips() + " - number of VIPs");
         System.out.println("----------------------");
 
         //9. przesloniecie
@@ -80,6 +81,50 @@ public class Main {
         //10. przeciazenie
         Animator animator1 = new Animator();
         Animator animator2 = new Animator(animations);
+
+        System.out.println();
+        System.out.println("------------ MINI PROJEKT 2 ---------------");
+        System.out.println();
+
+        //M02 - asocjacje
+        //1. zwykła
+        // BirthdayPerson 1-*  BirthdayParty
+        System.out.println("------------asocjacja zwykła---------------");
+        BirthdayParty birthdayParty5 = new BirthdayParty( "cst34", gadgets );
+        BirthdayPerson birthdayPerson = new BirthdayPerson("Jas", "Kowalski",  null, true);
+        birthdayPerson.addBirthdayParty(birthdayParty5);
+
+        //2. Z atrybutem
+        //GastronomyWorker * - * Training (WorkerTraining)
+        System.out.println("------------asocjacja z atrybutem---------------");
+
+        Training training1 = new Training("kurs kawy", 20, "po tym kursie bedziecie krolami kawy" );
+        Training training2 = new Training("kurs robienia pizzy", 50, "super kurs pizzy" );
+
+        GastronomyWorker g = new GastronomyWorker(6, "Jan", "Kowal", "ccc1", 10, 17, null, null, null);
+
+        WorkerTraining workerTraining1 = new WorkerTraining(LocalDate.now(), 5, g, training1);
+        WorkerTraining workerTraining2 = new WorkerTraining(LocalDate.now(), 5, g, training2);
+
+        //3. Kwalifikowana
+        //BirthdayParty - Client (clientNumber)
+        System.out.println("------------asocjacja kwalifikowana---------------");
+
+        Client client9 = new Client("c3", false);
+        BirthdayParty birthdayParty9 = new BirthdayParty(LocalDate.now(), "cst15", 5);
+        birthdayParty9.addClientQualif(client9);
+
+        System.out.println(birthdayParty9.findClientQualif("c3"));
+
+        //4. Kompozycja 1-*
+        //Room z wewnetrzna klasa Part
+        System.out.println("------------kompozycja---------------");
+
+        Room room = new Room("las", "salka wyglada jak las", 15);
+        room.createPart("czesc1");
+        room.createPart("czesc2");
+
+        room.getParts().forEach(p -> System.out.println(p));
 
     }
 }
